@@ -1,293 +1,127 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Ya‑Sin 手繪明信片（單檔版，多語系，雙欄排版）</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {--bg:#F9FCFA;--card:#FFFFFF;--ink:#333;--muted:#666;--brand:#5DAC81;--brand-light:#A8D8B9;--brand-dark:#1B813E;--ring:#A8D8B9}
-  *{box-sizing:border-box}
-  body{margin:0;font:16px/1.6 'Noto Sans TC','Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
-  a{text-decoration:none;color:inherit}
-  /* Header */
-  header{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--brand-light);z-index:20}
-  header .inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 24px}
-  h1{font-size:20px;margin:0;color:var(--brand-dark)}
-  .nav{display:flex;gap:16px;align-items:center}
-  .nav a{color:var(--brand-dark);font-weight:600}
-  .nav a:hover{color:var(--brand)}
-  /* Lang switch */
-  .lang{position:relative}
-  .lang-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--brand-light);background:#fff;padding:8px 10px;border-radius:999px;cursor:pointer}
-  .lang-menu{position:absolute;right:0;top:42px;background:#fff;border:1px solid var(--brand-light);border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.08);display:none;overflow:hidden}
-  .lang-menu button{display:block;width:100%;padding:8px 12px;border:0;background:#fff;text-align:left}
-  .lang-menu button:hover{background:var(--brand-light)}
-  /* Hero */
-  .hero{max-width:1100px;margin:0 auto;padding:48px 24px 28px 24px}
-  .hero h2{font-size:28px;margin:0 0 8px;color:var(--brand-dark)}
-  .hero p{margin:0;color:var(--muted)}
-  /* Main two-column */
-  .main{max-width:1100px;margin:0 auto;padding:12px 24px 40px 24px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
-  @media(max-width:900px){.main{grid-template-columns:1fr}}
-  /* Cards & form */
-  .card{background:var(--card);border:1px solid var(--brand-light);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-  .card h2{margin:0;padding:14px 16px;border-bottom:1px solid var(--brand-light);font-size:16px;color:var(--brand-dark)}
-  .card .body{padding:16px}
-  label{font-weight:600;font-size:13px;display:block;margin:6px 0;color:var(--brand-dark)}
-  input,select,textarea,button{width:100%;padding:10px 12px;border:1px solid var(--brand-light);border-radius:12px;background:#fff}
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--ring);border-color:transparent}
-  .grid{display:grid;gap:12px}
-  .grid.two{grid-template-columns:1fr 1fr}
-  @media(max-width:640px){.grid.two{grid-template-columns:1fr}}
-  .switch{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--brand-light);border-radius:12px;padding:12px;background:#fff}
-  .muted{color:var(--muted);font-size:12px}
-  /* Gallery */
-  .gallery{display:grid;grid-template-columns:1fr;gap:16px}
-  .gallery img{width:100%;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
-  /* Sticky total box in right column */
-  .sticky-total{position:sticky;bottom:16px;margin-top:8px}
-  .total{display:flex;flex-direction:column;gap:10px;background:var(--brand);color:#fff;border-radius:16px;padding:14px;border:1px solid var(--brand-dark)}
-  .total .mainline{display:flex;justify-content:space-between;align-items:center}
-  .total .mainline b{font-size:18px}
-  #detailBox{display:none;background:#fff;color:var(--ink);border-radius:12px;padding:10px;border:1px solid var(--brand-light)}
-  #toggleDetail{background:#fff;color:var(--brand-dark);border:1px solid var(--brand-light);border-radius:10px;cursor:pointer;padding:6px 10px}
-  .btn{background:var(--brand);color:#fff;border:none;border-radius:12px;padding:12px 18px;cursor:pointer;transition:.2s}
-  .btn:hover{background:var(--brand-dark)}
-  footer{text-align:center;padding:28px;color:var(--muted);font-size:14px}
-</style>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>捲仔的手繪明信片</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      line-height: 1.5;
+      background: #F9FCFA;
+      color: #333;
+    }
+    header {
+      background: #fff;
+      border-bottom: 1px solid #A8D8B9;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #1B813E;
+    }
+    nav a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: #1B813E;
+      font-weight: 600;
+    }
+    nav a:hover {
+      color: #5DAC81;
+    }
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, #A8D8B9, #fff);
+    }
+    .hero h2 {
+      font-size: 28px;
+      color: #1B813E;
+    }
+    .hero p {
+      max-width: 600px;
+      margin: 12px auto;
+      color: #555;
+    }
+    .btn {
+      display: inline-block;
+      background: #5DAC81;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 16px;
+    }
+    .btn:hover { background: #1B813E; }
+    .wrap {
+      max-width: 960px;
+      margin: auto;
+      padding: 40px 20px;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+    }
+    iframe {
+      width: 100%;
+      height: 1200px;
+      border: none;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <div class="inner">
-    <h1>🎨 Ya‑Sin 手繪明信片</h1>
-    <div class="nav">
-      <a href="#order">下單</a>
+  <header>
+    <h1>🎨 捲仔的手繪明信片</h1>
+    <nav>
       <a href="#works">作品</a>
-      <div class="lang">
-        <button class="lang-btn" id="langBtn">🌐 <span id="langLabel">繁中</span></button>
-        <div class="lang-menu" id="langMenu">
-          <button data-lang="zh">繁中</button>
-          <button data-lang="en">English</button>
-          <button data-lang="fr">Français</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
+      <a href="#order">下單</a>
+    </nav>
+  </header>
 
-<section class="hero">
-  <h2 id="hero-title">用水彩凝結時間</h2>
-  <p id="hero-text">每張手繪明信片，都是屬於你的獨一無二。<br>旅行回憶、生活記實、亦或是送出重要的心意，讓我為你細筆描繪。</p>
-</section>
-
-<section class="main">
-  <!-- Left: Order Form -->
-  <section class="card" id="order">
-    <h2>下單資訊</h2>
-    <div class="body grid" style="gap:16px">
-      <div class="grid two">
-        <div><label>姓名 *</label><input id="name" placeholder="王小明 / Jane Doe"></div>
-        <div><label>Email *</label><input id="email" type="email" placeholder="you@example.com"></div>
-      </div>
-      <div class="grid two">
-        <div><label>Instagram</label><input id="ig" placeholder="@yourhandle"></div>
-        <div>
-          <label>寄送地區 *</label>
-          <select id="region"><option value="LU">盧森堡 (LU)</option><option value="EU">歐洲 (EU)</option><option value="TW">台灣 (TW)</option><option value="WORLD">全球 (WORLD)</option></select>
-        </div>
-      </div>
-      <div>
-        <label>寄送地址 *</label>
-        <textarea id="address" rows="3" placeholder="收件人、地址、郵遞區號、電話"></textarea>
-      </div>
-      <div class="grid two">
-        <div>
-          <label>風格 *</label>
-          <select id="style">
-            <option value="watercolor">水彩 (€20)</option>
-            <option value="line">純線稿 (€20)</option>
-          </select>
-        </div>
-        <div>
-          <label>數量 *</label>
-          <input id="qty" type="number" min="1" value="1">
-        </div>
-      </div>
-      <div class="grid two">
-        <div class="switch">
-          <div><div style="font-weight:600">加畫人/寵物</div><div class="muted">+ €5 / 張</div></div>
-          <select id="person"><option value="0">否</option><option value="1">是</option></select>
-        </div>
-        <div class="switch">
-          <div><div style="font-weight:600">背景細節</div><div class="muted">+ €3 / 張</div></div>
-          <select id="bg"><option value="0">否</option><option value="1">是</option></select>
-        </div>
-      </div>
-      <div>
-        <label>備註 / 氛圍關鍵字</label>
-        <textarea id="note" rows="3" placeholder="例：溫暖、旅行、薄霧清晨、加入日期 2025.10.10 等"></textarea>
-      </div>
-      <div>
-        <button class="btn" id="submit">送出訂單</button>
-      </div>
-          <div>
-        <button class="btn" id="submit">送出訂單</button>
-        <div id="submitMsg" class="muted" style="margin-top:8px;display:none">訂單已送出，請選擇付款方式：</div>
-        <div id="paySection" style="display:none;gap:8px;margin-top:8px" class="grid">
-          <button id="payAuto">信用卡（自動計金額）</button>
-          <button id="payPaypal">PayPal</button>
-          <button id="payRevolut">Revolut</button>
-        </div>
-      </div>
-    </div>
+  <section class="hero">
+    <h2>用水彩凝結時間</h2>
+    <p>手繪明信片，屬於你的獨一無二。</p>
+    <p>旅行散策、生活雲瞬、亦或是送出重要的心意，讓我為你，細筆描繪。</p>
+    <a href="#order" class="btn">下單去</a>
   </section>
 
-  <!-- Right: Works + Sticky Total -->
-  <aside>
-    <section class="card" id="works">
-      <h2>作品展示</h2>
-      <div class="body">
-        <div class="gallery">
-          <img src="IMG_9302.jpeg" alt="作品1">
-          <img src="IMG_9944.jpeg" alt="作品2">
-          <img src="IMG_0646.jpeg" alt="作品3">
-        </div>
-      </div>
-    </section>
-
-    <div class="sticky-total">
-      <div class="total">
-        <div class="mainline"><span>總計</span><b id="t-total">€0.00</b></div>
-        <button id="toggleDetail">顯示明細 ▾</button>
-        <div id="detailBox">
-          <div id="t-sub">小計：€0.00</div>
-          <div id="t-add">加購：€0.00</div>
-          <div id="t-ship">運費：€0.00</div>
-        </div>
-      </div>
+  <div id="works" class="wrap">
+    <h2>🌿 作品 </h2>
+    <div class="gallery">
+      <img src="IMG_9302.jpeg" alt="作品1">
+      <img src="IMG_9944.jpeg" alt="作品2">
+      <img src="IMG_0646.jpeg" alt="作品3">
     </div>
-  </aside>
-</section>
+  </div>
 
-<footer>© 2025 Ya‑Sin 手繪明信片 ｜ Made with 💚</footer>
+  <div id="order" class="wrap">
+    <h2>📝 下單表單</h2>
+    <iframe src="postcard-order.html"></iframe>
+  </div>
 
-<script>
-// ===== 多語系（Hero 區塊） =====
-const LANG = {
-  zh:{label:'繁中', title:'用水彩凝結時間', lines:[
-    '每張手繪明信片，都是屬於你的獨一無二。',
-    '旅行回憶、生活記實、亦或是送出重要的心意，讓我為你細筆描繪。'
-  ]},
-  en:{label:'EN', title:'Captured in watercolor', lines:[
-    'Each hand-painted postcard is uniquely yours.',
-    'Travel memories, everyday moments, or heartfelt messages — let me capture them in watercolor lines.'
-  ]},
-  fr:{label:'FR', title:'Capturer le temps en aquarelle', lines:[
-    'Chaque carte postale peinte à la main est une pièce unique pour vous.',
-    'Souvenirs de voyage, instants de vie ou messages précieux — je les dessine avec soin.'
-  ]}
-};
-let currentLang='zh';
-const langBtn=document.getElementById('langBtn');
-const langMenu=document.getElementById('langMenu');
-const langLabel=document.getElementById('langLabel');
-langBtn.addEventListener('click',()=>{ langMenu.style.display = langMenu.style.display==='block'?'none':'block' });
-langMenu.addEventListener('click',e=>{ if(e.target.dataset.lang){ setLang(e.target.dataset.lang); langMenu.style.display='none'; }});
-function setLang(l){ currentLang=l; const d=LANG[l]; document.getElementById('hero-title').textContent=d.title; document.getElementById('hero-text').innerHTML=d.lines.join('<br>'); langLabel.textContent=d.label; }
-
-// ===== 價格計算 =====
-// 後端 / 付款設定
-const CONFIG = {
-  FORMSPREE_ENDPOINT: 'https://formspree.io/f/xzzjzwba',
-  PAYPAL_LINK: 'https://paypal.me/YCpostcard',
-  REVOLUT_LINK: 'https://revolut.me/yasinla9g',
-  STRIPE_CHECKOUT_ENDPOINT: '' // 之後貼上 Netlify Function URL
-};
-const PRICING={watercolor:20,line:20,person:5,bg:3,ship:{LU:1.5,EU:2.0,TW:2.5,WORLD:3.0}};
-function euro(n){return `€${Number(n).toFixed(2)}`}
-function recalc(){
-  const qty=Math.max(1,parseInt(document.getElementById('qty').value||'1',10));
-  const style=document.getElementById('style').value;
-  const base=PRICING[style]*qty;
-  const add=(( (document.getElementById('person').value==='1'?PRICING.person:0) + (document.getElementById('bg').value==='1'?PRICING.bg:0) )*qty;
-  const ship=PRICING.ship[document.getElementById('region').value]||0;
-  const total=base+add+ship;
-  document.getElementById('t-total').textContent=euro(total);
-  document.getElementById('t-sub').textContent=`小計：${euro(base)}`;
-  document.getElementById('t-add').textContent=`加購：${euro(add)}`;
-  document.getElementById('t-ship').textContent=`運費：${euro(ship)}`;
-}
-['change','input'].forEach(ev=>document.body.addEventListener(ev,e=>{if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) recalc()}));
-recalc();
-
-// 送出訂單 → Formspree
-function buildOrder(){
-  const total=document.getElementById('t-total').textContent;
-  return [
-    '[手繪明信片訂單]',
-    '姓名: '+document.getElementById('name').value,
-    'Email: '+document.getElementById('email').value,
-    'IG: '+document.getElementById('ig').value,
-    '寄送地區: '+document.getElementById('region').value,
-    '地址: '+document.getElementById('address').value,
-    '風格: '+document.getElementById('style').value,
-    '數量: '+document.getElementById('qty').value,
-    '加畫人/寵物: '+(document.getElementById('person').value==='1'?'是':'否'),
-    '背景細節: '+(document.getElementById('bg').value==='1'?'是':'否'),
-    total
-  ].join('
-');
-}
-
-function getTotalAmount(){
-  const t=document.getElementById('t-total').textContent||''; return (t.match(/€([0-9]+(?:\.[0-9]{1,2})?)/)||[])[1]||'0';
-}
-
-document.getElementById('submit').addEventListener('click', async ()=>{
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const address=document.getElementById('address').value.trim();
-  if(!name){alert('請輸入姓名');return}
-  if(!(email.includes('@')&&email.includes('.'))){alert('請輸入有效 Email');return}
-  if(!address){alert('請輸入寄送地址');return}
-  try{
-    await fetch(CONFIG.FORMSPREE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,email,summary:buildOrder(),totalEUR:getTotalAmount()})});
-    document.getElementById('submitMsg').style.display='block';
-    document.getElementById('paySection').style.display='grid';
-  }catch(e){ alert('表單提交失敗，請稍後再試'); }
-});
-
-// 付款
-function openPay(url){
-  if(!url){ alert('尚未設定付款連結'); return }
-  const amt=getTotalAmount(); let final=url;
-  if(/paypal\.me\//i.test(url)&&amt){final=url.replace(/\/$/,'')+'/'+amt}
-  if(/revolut\.me\//i.test(url)&&amt){final=url+(url.includes('?')?'&':'?')+'amount='+amt}
-  window.open(final,'_blank');
-}
-
-document.getElementById('payPaypal').addEventListener('click',()=>openPay(CONFIG.PAYPAL_LINK));
-document.getElementById('payRevolut').addEventListener('click',()=>openPay(CONFIG.REVOLUT_LINK));
-document.getElementById('payAuto').addEventListener('click', async ()=>{
-  if(!CONFIG.STRIPE_CHECKOUT_ENDPOINT){ alert('尚未設定 Stripe 自動刷卡端點'); return }
-  const name=document.getElementById('name').value.trim();
-  const email=document.getElementById('email').value.trim();
-  const amount=getTotalAmount();
-  try{
-    const res=await fetch(CONFIG.STRIPE_CHECKOUT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderNo:'YSP-'+Date.now(),amountEUR:amount,name,email})});
-    const data=await res.json(); if(data.url) location.href=data.url; else throw new Error('no url');
-  }catch(e){ alert('建立刷卡頁失敗，請改用 PayPal / Revolut'); }
-});
-
-// 展開/收合明細
-const toggle=document.getElementById('toggleDetail');
-toggle.addEventListener('click',()=>{ const box=document.getElementById('detailBox'); const open=box.style.display==='block'; box.style.display=open?'none':'block'; toggle.textContent=open?'顯示明細 ▾':'隱藏明細 ▴'; });
-
-// 初始語言
-setLang('zh');
-</script>
+  <footer>
+    © 2025 捲仔的手繪明信片 ｜ Made with 💚
+  </footer>
 </body>
 </html>
