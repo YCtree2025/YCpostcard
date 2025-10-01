@@ -12,26 +12,32 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.65 'Noto Sans TC','Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);word-break:keep-all}
   a{text-decoration:none;color:inherit}
+  /* ===== Header ===== */
   header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--brand-100);z-index:20}
   header .inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 24px}
   h1{font-size:20px;margin:0;color:var(--brand-dark)}
-  .nav{display:flex;gap:16px;align-items:center}
-  .nav a{color:var(--brand-dark);font-weight:600}
-  .nav a:hover{color:var(--brand)}
+  /* renaming to avoid conflict with slider controls */
+  .topnav{display:flex;gap:16px;align-items:center;margin-left:auto}
+  .topnav a{color:var(--brand-dark);font-weight:600}
+  .topnav a:hover{color:var(--brand)}
   .lang-inline{display:flex;gap:10px;align-items:center}
   .lang-link{padding:6px 10px;border-radius:999px;font-weight:700;color:var(--brand-dark);opacity:.7;text-decoration:none}
   .lang-link:hover{background:var(--brand-50);opacity:1}
   .lang-link.active{background:var(--brand-50);opacity:1}
+
   .hero{max-width:1100px;margin:0 auto;padding:52px 24px 28px}
   .hero h2{font-size:30px;margin:0 0 10px;color:var(--brand-dark)}
   .hero p{margin:0;color:var(--muted);font-size:16px}
+
   .main{max-width:1100px;margin:0 auto;padding:16px 24px 44px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
   @media(max-width:900px){.main{grid-template-columns:1fr}}
-  /* 卡片用色塊，不用外框 */
+
+  /* ===== Card ===== */
   .card{background:linear-gradient(180deg,#fff, var(--brand-50));border:0;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
   .card h2{margin:0;padding:16px 18px;border-bottom:0;background:var(--brand-50);border-top-left-radius:18px;border-top-right-radius:18px;font-size:18px;color:var(--brand-dark)}
   .card .body{padding:18px}
-  /* 表單層級與字級 */
+
+  /* ===== Form ===== */
   label{font-weight:700;font-size:14px;display:block;margin:6px 0 4px;color:var(--brand-dark)}
   .addon-title{font-weight:600;font-size:13px}
   .subtle{font-size:13px;color:var(--muted)}
@@ -40,20 +46,23 @@
   .grid{display:grid;gap:12px}
   .grid.two{grid-template-columns:1fr 1fr}
   @media(max-width:640px){.grid.two{grid-template-columns:1fr}}
-  /* switch 區塊也改用色塊 */
+
   .switch{display:flex;justify-content:space-between;align-items:center;border:0;border-radius:14px;padding:12px 14px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03), inset 0 0 0 1px var(--brand-100)}
   .muted{color:var(--muted);font-size:12px}
+
+  /* ===== Slider ===== */
   .slider{position:relative;overflow:hidden;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
   .slides{position:relative;height:0;padding-top:66%;}
   .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
   .slide.active{opacity:1}
-  .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:20px;line-height:36px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
-  .nav.prev{left:10px}
-  .nav.next{right:10px}
+  .slider-nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:20px;line-height:36px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .slider-nav.prev{left:10px}
+  .slider-nav.next{right:10px}
   .dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px}
   .dots button{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.7);cursor:pointer}
   .dots button.active{background:#fff}
   .gallery img{width:100%;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
+
   .sticky-total{position:sticky;bottom:16px;margin-top:8px}
   .total{display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,var(--brand),#4da774);color:#fff;border-radius:18px;padding:16px 16px 12px}
   .total .mainline{display:flex;justify-content:space-between;align-items:center}
@@ -72,7 +81,7 @@
 <header>
   <div class="inner">
     <h1 id="i-brand">🎨 Ya‑Sin 手繪明信片</h1>
-    <div class="nav">
+    <div class="topnav">
       <a href="#order" id="i-nav-order">下單</a>
       <a href="#works" id="i-nav-works">作品</a>
       <nav class="lang-inline" id="langInline">
@@ -80,7 +89,6 @@
         <a href="#" data-lang="en" class="lang-link">EN</a>
         <a href="#" data-lang="fr" class="lang-link">FR</a>
       </nav>
-      </div>
     </div>
   </div>
 </header>
@@ -165,8 +173,8 @@
             <img src="IMG_9944.jpeg" alt="work2" class="slide">
             <img src="IMG_0646.jpeg" alt="work3" class="slide">
           </div>
-          <button class="nav prev" aria-label="Prev" id="slidePrev">‹</button>
-          <button class="nav next" aria-label="Next" id="slideNext">›</button>
+          <button class="slider-nav prev" aria-label="Prev" id="slidePrev">‹</button>
+          <button class="slider-nav next" aria-label="Next" id="slideNext">›</button>
           <div class="dots" id="slideDots"></div>
         </div>
       </div>
@@ -189,7 +197,10 @@
 <footer id="i-footer">© 2025 Ya‑Sin 手繪明信片 ｜ Made with 💚</footer>
 
 <script>
-// ===== 多語系字典（整頁） =====
+// ===== Helpers =====
+const $ = id => document.getElementById(id);
+
+// ===== i18n =====
 const I18N={
   zh:{label:'繁中',brand:'🎨 Ya‑Sin 手繪明信片',navOrder:'下單',navWorks:'作品',
       heroTitle:'用水彩凝結時間',heroLines:['每張手繪明信片，都是屬於你的獨一無二。','旅行回憶、生活記實、亦或是送出重要的心意，讓我為你細筆描繪。'],
@@ -224,10 +235,8 @@ const I18N={
 };
 
 let currentLang='zh';
-const $=id=>document.getElementById(id);
-
 function applyLang(lang){
-  const t=I18N[lang]; currentLang=lang; $('langLabel').textContent=t.label;
+  const t=I18N[lang]; currentLang=lang;
   // header & hero
   $('i-brand').textContent=t.brand;
   $('i-nav-order').textContent=t.navOrder; $('i-nav-works').textContent=t.navWorks;
@@ -239,7 +248,7 @@ function applyLang(lang){
   $('i-yes').textContent=t.yes; $('i-no').textContent=t.no; $('i-yes2').textContent=t.yes; $('i-no2').textContent=t.no;
   $('i-note-label').textContent=t.noteLabel; $('submit').textContent=t.submit; $('submitMsg').textContent=t.afterSubmit;
   $('i-works-title').textContent=t.works; $('i-total-label').textContent=t.total;
-  $('toggleDetail').textContent = $('#detailBox').style.display==='block' ? t.detailHide : t.detailShow;
+  $('toggleDetail').textContent = (document.getElementById('detailBox').style.display==='block' ? t.detailHide : t.detailShow);
   // placeholders
   $('name').placeholder=t.phName; $('email').placeholder=t.phEmail; $('ig').placeholder=t.phIG; $('address').placeholder=t.phAddr; $('note').placeholder=t.phNote;
   // regions
@@ -248,21 +257,22 @@ function applyLang(lang){
   $('payAuto').textContent=t.payCard;
 }
 
-// lang UI
-// 右上角：點擊 繁 / EN / FR 切換
+// Language switch (top-right)
 const langBar=document.getElementById('langInline');
 langBar.addEventListener('click',(e)=>{
   const a=e.target.closest('.lang-link'); if(!a) return; e.preventDefault();
   document.querySelectorAll('.lang-link').forEach(el=>el.classList.toggle('active',el===a));
   applyLang(a.dataset.lang);
-}); langMenu.style.display='none'; }});
+  recalc();
+});
 
-// ===== 價格計算 & 付款設定 =====
+// ===== Pricing =====
 const CONFIG={ FORMSPREE_ENDPOINT:'https://formspree.io/f/xzzjzwba', PAYPAL_LINK:'https://paypal.me/YCpostcard', REVOLUT_LINK:'https://revolut.me/yasinla9g', STRIPE_CHECKOUT_ENDPOINT:'' };
 const PRICING={watercolor:20,line:20,person:5,bg:3,ship:{LU:1.5,EU:2.0,TW:2.5,WORLD:3.0}};
 const euro=n=>`€${Number(n).toFixed(2)}`;
+
 function recalc(){
-  const qty = Math.max(1, parseInt($('qty').value||'1',10));
+  const qty = Math.max(1, parseInt(($('qty').value||'1'),10));
   const style = $('style').value;
   const base = (PRICING[style]||0)*qty;
   const perAdd = ( ($('person').value==='1'?PRICING.person:0) + ($('bg').value==='1'?PRICING.bg:0) );
@@ -273,21 +283,16 @@ function recalc(){
   $('t-sub').textContent   = (I18N[currentLang].sub  || '小計：') + euro(base);
   $('t-add').textContent   = (I18N[currentLang].add  || '加購：') + euro(add);
   $('t-ship').textContent  = (I18N[currentLang].ship || '運費：') + euro(ship);
-}{
-  const qty=Math.max(1,parseInt($('qty').value||'1',10));
-  const style=$('style').value;
-  const base=PRICING[style]*qty;
-  const add=(( $('person').value==='1'?PRICING.person:0 ) + ( $('bg').value==='1'?PRICING.bg:0 ))*qty;
-  const ship=PRICING.ship[$('region').value]||0;
-  const total=base+add+ship;
-  $('t-total').textContent=euro(total);
-  $('t-sub').textContent=(I18N[currentLang].sub||'小計：')+euro(base);
-  $('t-add').textContent=(I18N[currentLang].add||'加購：')+euro(add);
-  $('t-ship').textContent=(I18N[currentLang].ship||'運費：')+euro(ship);
 }
-['change','input'].forEach(ev=>document.body.addEventListener(ev,e=>{ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) recalc();
 
-// 幻燈片初始化
+['change','input'].forEach(ev=>{
+  document.body.addEventListener(ev,e=>{
+    const tag = e.target.tagName;
+    if(tag==='INPUT' || tag==='SELECT' || tag==='TEXTAREA') recalc();
+  });
+});
+
+// ===== Slider =====
 (function(){
   const slides=[...document.querySelectorAll('.slide')];
   const dotsWrap=document.getElementById('slideDots');
@@ -299,10 +304,13 @@ function recalc(){
   function autoplay(){ timer=setInterval(()=>go(idx+1), 3500); }
   function restart(){ clearInterval(timer); autoplay(); }
   autoplay();
-})(); }));
+})();
+
+// initial calc & language
+applyLang('zh');
 recalc();
 
-// 送出訂單 → Formspree
+// ===== Order submit & payment =====
 function buildOrder(){
   const lines=[
     '[Postcard Order]',
@@ -320,8 +328,10 @@ function buildOrder(){
   return lines.join('\n');
 }
 function getTotalAmount(){ const t=$('t-total').textContent||''; return (t.match(/€([0-9]+(?:\.[0-9]{1,2})?)/)||[])[1]||'0'; }
+
 $('submit').addEventListener('click', async ()=>{
   const name=$('name').value.trim(); const email=$('email').value.trim(); const address=$('address').value.trim();
+  const t = I18N[currentLang];
   if(!name){alert(currentLang==='en'?'Please enter name':currentLang==='fr'?'Veuillez saisir le nom':'請輸入姓名');return}
   if(!(email.includes('@')&&email.includes('.'))){alert(currentLang==='en'?'Please enter a valid email':currentLang==='fr'?'Veuillez saisir un email valide':'請輸入有效 Email');return}
   if(!address){alert(currentLang==='en'?'Please enter shipping address':currentLang==='fr'?'Veuillez saisir l\'adresse d\'envoi':'請輸入寄送地址');return}
@@ -336,11 +346,9 @@ $('payPaypal').addEventListener('click',()=>openPay(CONFIG.PAYPAL_LINK));
 $('payRevolut').addEventListener('click',()=>openPay(CONFIG.REVOLUT_LINK));
 $('payAuto').addEventListener('click', async ()=>{ if(!CONFIG.STRIPE_CHECKOUT_ENDPOINT){ alert('Stripe endpoint not set'); return } const name=$('name').value.trim(); const email=$('email').value.trim(); const amount=getTotalAmount(); try{ const res=await fetch(CONFIG.STRIPE_CHECKOUT_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({orderNo:'YSP-'+Date.now(),amountEUR:amount,name,email})}); const data=await res.json(); if(data.url) location.href=data.url; else throw new Error('no url'); }catch(e){ alert('建立刷卡頁失敗，請改用 PayPal / Revolut'); }});
 
+// Toggle detail
 const toggle=$('toggleDetail');
 toggle.addEventListener('click',()=>{ const box=$('detailBox'); const open=box.style.display==='block'; box.style.display=open?'none':'block'; toggle.textContent=open?I18N[currentLang].detailShow:I18N[currentLang].detailHide; });
-
-// 初始語言
-applyLang('zh');
 </script>
 </body>
 </html>
