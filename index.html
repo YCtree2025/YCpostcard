@@ -18,11 +18,10 @@
   .nav{display:flex;gap:16px;align-items:center}
   .nav a{color:var(--brand-dark);font-weight:600}
   .nav a:hover{color:var(--brand)}
-  .lang{position:relative}
-  .lang-btn{display:flex;align-items:center;gap:6px;border:0;background:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06)}
-  .lang-menu{position:absolute;right:0;top:42px;background:#fff;border:0;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.12);display:none;overflow:hidden}
-  .lang-menu button{display:block;width:100%;padding:10px 14px;border:0;background:#fff;text-align:left}
-  .lang-menu button:hover{background:var(--brand-50)}
+  .lang-inline{display:flex;gap:10px;align-items:center}
+  .lang-link{padding:6px 10px;border-radius:999px;font-weight:700;color:var(--brand-dark);opacity:.7;text-decoration:none}
+  .lang-link:hover{background:var(--brand-50);opacity:1}
+  .lang-link.active{background:var(--brand-50);opacity:1}
   .hero{max-width:1100px;margin:0 auto;padding:52px 24px 28px}
   .hero h2{font-size:30px;margin:0 0 10px;color:var(--brand-dark)}
   .hero p{margin:0;color:var(--muted);font-size:16px}
@@ -34,6 +33,7 @@
   .card .body{padding:18px}
   /* 表單層級與字級 */
   label{font-weight:700;font-size:14px;display:block;margin:6px 0 4px;color:var(--brand-dark)}
+  .addon-title{font-weight:600;font-size:13px}
   .subtle{font-size:13px;color:var(--muted)}
   input,select,textarea,button{width:100%;padding:12px 14px;border:0;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px var(--brand-100)}
   input:focus,select:focus,textarea:focus{outline:3px solid var(--ring);box-shadow:inset 0 0 0 0 transparent}
@@ -43,7 +43,16 @@
   /* switch 區塊也改用色塊 */
   .switch{display:flex;justify-content:space-between;align-items:center;border:0;border-radius:14px;padding:12px 14px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03), inset 0 0 0 1px var(--brand-100)}
   .muted{color:var(--muted);font-size:12px}
-  .gallery{display:grid;grid-template-columns:1fr;gap:16px}
+  .slider{position:relative;overflow:hidden;border-radius:14px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
+  .slides{position:relative;height:0;padding-top:66%;}
+  .slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .5s ease}
+  .slide.active{opacity:1}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);border:0;background:rgba(255,255,255,.85);width:36px;height:36px;border-radius:999px;cursor:pointer;font-size:20px;line-height:36px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+  .nav.prev{left:10px}
+  .nav.next{right:10px}
+  .dots{position:absolute;left:0;right:0;bottom:8px;display:flex;justify-content:center;gap:6px}
+  .dots button{width:8px;height:8px;border-radius:999px;border:0;background:rgba(255,255,255,.7);cursor:pointer}
+  .dots button.active{background:#fff}
   .gallery img{width:100%;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
   .sticky-total{position:sticky;bottom:16px;margin-top:8px}
   .total{display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,var(--brand),#4da774);color:#fff;border-radius:18px;padding:16px 16px 12px}
@@ -66,13 +75,11 @@
     <div class="nav">
       <a href="#order" id="i-nav-order">下單</a>
       <a href="#works" id="i-nav-works">作品</a>
-      <div class="lang">
-        <button class="lang-btn" id="langBtn">🌐 <span id="langLabel">繁中</span></button>
-        <div class="lang-menu" id="langMenu">
-          <button data-lang="zh">繁中</button>
-          <button data-lang="en">English</button>
-          <button data-lang="fr">Français</button>
-        </div>
+      <nav class="lang-inline" id="langInline">
+        <a href="#" data-lang="zh" class="lang-link active">繁</a>
+        <a href="#" data-lang="en" class="lang-link">EN</a>
+        <a href="#" data-lang="fr" class="lang-link">FR</a>
+      </nav>
       </div>
     </div>
   </div>
@@ -123,11 +130,11 @@
       </div>
       <div class="grid two">
         <div class="switch">
-          <div><div style="font-weight:600" id="i-person-title" class="no-break">加畫人/寵物</div><div class="muted" id="i-person-note">+ €5 / 張</div></div>
+          <div><div id="i-person-title" class="no-break addon-title">加畫人/寵物</div><div class="muted" id="i-person-note">+ €5 / 張</div></div>
           <select id="person"><option value="0" id="i-no">否</option><option value="1" id="i-yes">是</option></select>
         </div>
         <div class="switch">
-          <div><div style="font-weight:600" id="i-bg-title" class="no-break">背景<wbr>細節</div><div class="muted" id="i-bg-note">+ €3 / 張</div></div
+          <div><div id="i-bg-title" class="no-break addon-title">背景<wbr>細節</div><div class="muted" id="i-bg-note">+ €3 / 張</div></div>
           <select id="bg"><option value="0" id="i-no2">否</option><option value="1" id="i-yes2">是</option></select>
         </div>
       </div>
@@ -152,10 +159,15 @@
     <section class="card" id="works">
       <h2 id="i-works-title">作品展示</h2>
       <div class="body">
-        <div class="gallery">
-          <img src="IMG_9302.jpeg" alt="work1">
-          <img src="IMG_9944.jpeg" alt="work2">
-          <img src="IMG_0646.jpeg" alt="work3">
+        <div class="slider" id="slider">
+          <div class="slides">
+            <img src="IMG_9302.jpeg" alt="work1" class="slide active">
+            <img src="IMG_9944.jpeg" alt="work2" class="slide">
+            <img src="IMG_0646.jpeg" alt="work3" class="slide">
+          </div>
+          <button class="nav prev" aria-label="Prev" id="slidePrev">‹</button>
+          <button class="nav next" aria-label="Next" id="slideNext">›</button>
+          <div class="dots" id="slideDots"></div>
         </div>
       </div>
     </section>
@@ -237,15 +249,31 @@ function applyLang(lang){
 }
 
 // lang UI
-const langBtn=$('langBtn'); const langMenu=$('langMenu');
-langBtn.addEventListener('click',()=>{ langMenu.style.display = langMenu.style.display==='block'?'none':'block' });
-langMenu.addEventListener('click',e=>{ const l=e.target.dataset.lang; if(l){ applyLang(l); langMenu.style.display='none'; }});
+// 右上角：點擊 繁 / EN / FR 切換
+const langBar=document.getElementById('langInline');
+langBar.addEventListener('click',(e)=>{
+  const a=e.target.closest('.lang-link'); if(!a) return; e.preventDefault();
+  document.querySelectorAll('.lang-link').forEach(el=>el.classList.toggle('active',el===a));
+  applyLang(a.dataset.lang);
+}); langMenu.style.display='none'; }});
 
 // ===== 價格計算 & 付款設定 =====
 const CONFIG={ FORMSPREE_ENDPOINT:'https://formspree.io/f/xzzjzwba', PAYPAL_LINK:'https://paypal.me/YCpostcard', REVOLUT_LINK:'https://revolut.me/yasinla9g', STRIPE_CHECKOUT_ENDPOINT:'' };
 const PRICING={watercolor:20,line:20,person:5,bg:3,ship:{LU:1.5,EU:2.0,TW:2.5,WORLD:3.0}};
 const euro=n=>`€${Number(n).toFixed(2)}`;
 function recalc(){
+  const qty = Math.max(1, parseInt($('qty').value||'1',10));
+  const style = $('style').value;
+  const base = (PRICING[style]||0)*qty;
+  const perAdd = ( ($('person').value==='1'?PRICING.person:0) + ($('bg').value==='1'?PRICING.bg:0) );
+  const add = perAdd * qty;
+  const ship = PRICING.ship[$('region').value]||0;
+  const total = base + add + ship;
+  $('t-total').textContent = euro(total);
+  $('t-sub').textContent   = (I18N[currentLang].sub  || '小計：') + euro(base);
+  $('t-add').textContent   = (I18N[currentLang].add  || '加購：') + euro(add);
+  $('t-ship').textContent  = (I18N[currentLang].ship || '運費：') + euro(ship);
+}{
   const qty=Math.max(1,parseInt($('qty').value||'1',10));
   const style=$('style').value;
   const base=PRICING[style]*qty;
@@ -257,7 +285,21 @@ function recalc(){
   $('t-add').textContent=(I18N[currentLang].add||'加購：')+euro(add);
   $('t-ship').textContent=(I18N[currentLang].ship||'運費：')+euro(ship);
 }
-['change','input'].forEach(ev=>document.body.addEventListener(ev,e=>{ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) recalc(); }));
+['change','input'].forEach(ev=>document.body.addEventListener(ev,e=>{ if(['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName)) recalc();
+
+// 幻燈片初始化
+(function(){
+  const slides=[...document.querySelectorAll('.slide')];
+  const dotsWrap=document.getElementById('slideDots');
+  let idx=0, timer=null;
+  function go(i){ idx=(i+slides.length)%slides.length; slides.forEach((s,j)=>s.classList.toggle('active',j===idx)); dotsWrap.querySelectorAll('button').forEach((d,j)=>d.classList.toggle('active',j===idx)); }
+  slides.forEach((_,i)=>{ const b=document.createElement('button'); if(i===0) b.classList.add('active'); dotsWrap.appendChild(b); b.addEventListener('click',()=>{ go(i); restart(); }); });
+  document.getElementById('slidePrev').addEventListener('click',()=>{ go(idx-1); restart(); });
+  document.getElementById('slideNext').addEventListener('click',()=>{ go(idx+1); restart(); });
+  function autoplay(){ timer=setInterval(()=>go(idx+1), 3500); }
+  function restart(){ clearInterval(timer); autoplay(); }
+  autoplay();
+})(); }));
 recalc();
 
 // 送出訂單 → Formspree
