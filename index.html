@@ -8,47 +8,54 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  :root {--bg:#F9FCFA;--card:#FFFFFF;--ink:#333;--muted:#666;--brand:#5DAC81;--brand-light:#A8D8B9;--brand-dark:#1B813E;--ring:#A8D8B9}
+  :root {--bg:#F9FCFA;--card:#FFFFFF;--ink:#2F3131;--muted:#646A6A;--brand:#5DAC81;--brand-50:#EAF6EF;--brand-100:#D8EFE3;--brand-dark:#1B813E;--ring:#A8D8B9}
   *{box-sizing:border-box}
-  body{margin:0;font:16px/1.6 'Noto Sans TC','Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg)}
+  body{margin:0;font:16px/1.65 'Noto Sans TC','Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);word-break:keep-all}
   a{text-decoration:none;color:inherit}
-  header{position:sticky;top:0;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--brand-light);z-index:20}
+  header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--brand-100);z-index:20}
   header .inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 24px}
   h1{font-size:20px;margin:0;color:var(--brand-dark)}
   .nav{display:flex;gap:16px;align-items:center}
   .nav a{color:var(--brand-dark);font-weight:600}
   .nav a:hover{color:var(--brand)}
   .lang{position:relative}
-  .lang-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--brand-light);background:#fff;padding:8px 10px;border-radius:999px;cursor:pointer}
-  .lang-menu{position:absolute;right:0;top:42px;background:#fff;border:1px solid var(--brand-light);border-radius:12px;box-shadow:0 8px 20px rgba(0,0,0,.08);display:none;overflow:hidden}
-  .lang-menu button{display:block;width:100%;padding:8px 12px;border:0;background:#fff;text-align:left}
-  .lang-menu button:hover{background:var(--brand-light)}
-  .hero{max-width:1100px;margin:0 auto;padding:48px 24px 28px 24px}
-  .hero h2{font-size:28px;margin:0 0 8px;color:var(--brand-dark)}
-  .hero p{margin:0;color:var(--muted)}
-  .main{max-width:1100px;margin:0 auto;padding:12px 24px 40px 24px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
+  .lang-btn{display:flex;align-items:center;gap:6px;border:0;background:#fff;padding:8px 12px;border-radius:999px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .lang-menu{position:absolute;right:0;top:42px;background:#fff;border:0;border-radius:12px;box-shadow:0 10px 24px rgba(0,0,0,.12);display:none;overflow:hidden}
+  .lang-menu button{display:block;width:100%;padding:10px 14px;border:0;background:#fff;text-align:left}
+  .lang-menu button:hover{background:var(--brand-50)}
+  .hero{max-width:1100px;margin:0 auto;padding:52px 24px 28px}
+  .hero h2{font-size:30px;margin:0 0 10px;color:var(--brand-dark)}
+  .hero p{margin:0;color:var(--muted);font-size:16px}
+  .main{max-width:1100px;margin:0 auto;padding:16px 24px 44px;display:grid;grid-template-columns:2fr 1fr;gap:24px}
   @media(max-width:900px){.main{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--brand-light);border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.05)}
-  .card h2{margin:0;padding:14px 16px;border-bottom:1px solid var(--brand-light);font-size:16px;color:var(--brand-dark)}
-  .card .body{padding:16px}
-  label{font-weight:600;font-size:13px;display:block;margin:6px 0;color:var(--brand-dark)}
-  input,select,textarea,button{width:100%;padding:10px 12px;border:1px solid var(--brand-light);border-radius:12px;background:#fff}
-  input:focus,select:focus,textarea:focus{outline:2px solid var(--ring);border-color:transparent}
+  /* 卡片用色塊，不用外框 */
+  .card{background:linear-gradient(180deg,#fff, var(--brand-50));border:0;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
+  .card h2{margin:0;padding:16px 18px;border-bottom:0;background:var(--brand-50);border-top-left-radius:18px;border-top-right-radius:18px;font-size:18px;color:var(--brand-dark)}
+  .card .body{padding:18px}
+  /* 表單層級與字級 */
+  label{font-weight:700;font-size:14px;display:block;margin:6px 0 4px;color:var(--brand-dark)}
+  .subtle{font-size:13px;color:var(--muted)}
+  input,select,textarea,button{width:100%;padding:12px 14px;border:0;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px var(--brand-100)}
+  input:focus,select:focus,textarea:focus{outline:3px solid var(--ring);box-shadow:inset 0 0 0 0 transparent}
   .grid{display:grid;gap:12px}
   .grid.two{grid-template-columns:1fr 1fr}
   @media(max-width:640px){.grid.two{grid-template-columns:1fr}}
-  .switch{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--brand-light);border-radius:12px;padding:12px;background:#fff}
+  /* switch 區塊也改用色塊 */
+  .switch{display:flex;justify-content:space-between;align-items:center;border:0;border-radius:14px;padding:12px 14px;background:#fff;box-shadow:0 1px 0 rgba(0,0,0,.03), inset 0 0 0 1px var(--brand-100)}
   .muted{color:var(--muted);font-size:12px}
   .gallery{display:grid;grid-template-columns:1fr;gap:16px}
-  .gallery img{width:100%;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+  .gallery img{width:100%;border-radius:12px;box-shadow:0 6px 16px rgba(0,0,0,.10)}
   .sticky-total{position:sticky;bottom:16px;margin-top:8px}
-  .total{display:flex;flex-direction:column;gap:10px;background:var(--brand);color:#fff;border-radius:16px;padding:14px;border:1px solid var(--brand-dark)}
+  .total{display:flex;flex-direction:column;gap:10px;background:linear-gradient(180deg,var(--brand),#4da774);color:#fff;border-radius:18px;padding:16px 16px 12px}
   .total .mainline{display:flex;justify-content:space-between;align-items:center}
-  .total .mainline b{font-size:18px}
-  #detailBox{display:none;background:#fff;color:var(--ink);border-radius:12px;padding:10px;border:1px solid var(--brand-light)}
-  #toggleDetail{background:#fff;color:var(--brand-dark);border:1px solid var(--brand-light);border-radius:10px;cursor:pointer;padding:6px 10px}
-  .btn{background:var(--brand);color:#fff;border:none;border-radius:12px;padding:12px 18px;cursor:pointer;transition:.2s}
+  .total .mainline b{font-size:20px}
+  #detailBox{display:none;background:#fff;color:var(--ink);border-radius:12px;padding:12px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  #toggleDetail{background:#fff;color:var(--brand-dark);border:0;border-radius:10px;cursor:pointer;padding:8px 12px;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+  .btn{background:var(--brand);color:#fff;border:none;border-radius:14px;padding:13px 18px;cursor:pointer;transition:.2s;box-shadow:0 6px 14px rgba(27,129,62,.18)}
   .btn:hover{background:var(--brand-dark)}
+  .no-break{white-space:nowrap}
+  .break-ok{word-break:keep-all}
+  @media(max-width:380px){ .sm-break br{display:block} }
   footer{text-align:center;padding:28px;color:var(--muted);font-size:14px}
 </style>
 </head>
@@ -116,11 +123,11 @@
       </div>
       <div class="grid two">
         <div class="switch">
-          <div><div style="font-weight:600" id="i-person-title">加畫人/寵物</div><div class="muted" id="i-person-note">+ €5 / 張</div></div>
+          <div><div style="font-weight:600" id="i-person-title" class="no-break">加畫人/寵物</div><div class="muted" id="i-person-note">+ €5 / 張</div></div>
           <select id="person"><option value="0" id="i-no">否</option><option value="1" id="i-yes">是</option></select>
         </div>
         <div class="switch">
-          <div><div style="font-weight:600" id="i-bg-title">背景細節</div><div class="muted" id="i-bg-note">+ €3 / 張</div></div>
+          <div><div style="font-weight:600" id="i-bg-title" class="no-break">背景<wbr>細節</div><div class="muted" id="i-bg-note">+ €3 / 張</div></div
           <select id="bg"><option value="0" id="i-no2">否</option><option value="1" id="i-yes2">是</option></select>
         </div>
       </div>
