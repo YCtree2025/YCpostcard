@@ -8,10 +8,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-<!-- Uploadcare Widget（你的 Public Key 已設定） -->
-<script>
-  window.UPLOADCARE_PUBLIC_KEY = 'a8488cf085bc13cb6f0a';
-</script>
+<!-- Uploadcare Widget（你的 Public Key） -->
+<script>window.UPLOADCARE_PUBLIC_KEY='a8488cf085bc13cb6f0a';</script>
 <script src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js"></script>
 
 <style>
@@ -19,7 +17,6 @@
   *{box-sizing:border-box}
   body{margin:0;font:16px/1.65 'Noto Sans TC','Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);word-break:keep-all}
   a{text-decoration:none;color:inherit}
-  /* ===== Header ===== */
   header{position:sticky;top:0;background:rgba(255,255,255,.9);backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--brand-100);z-index:20}
   header .inner{max-width:1100px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 24px}
   h1{font-size:20px;margin:0;color:var(--brand-dark)}
@@ -27,7 +24,7 @@
   .topnav a{color:var(--brand-dark);font-weight:600}
   .topnav a:hover{color:var(--brand)}
   .lang-inline{display:flex;gap:10px;align-items:center}
-  .lang-link{padding:6px 10px;border-radius:999px;font-weight:700;color:var(--brand-dark);opacity:.7;text-decoration:none}
+  .lang-link{padding:6px 10px;border-radius:999px;font-weight:700;color:var(--brand-dark);opacity:.7}
   .lang-link:hover{background:var(--brand-50);opacity:1}
   .lang-link.active{background:var(--brand-50);opacity:1}
 
@@ -39,7 +36,7 @@
   @media(max-width:900px){.main{grid-template-columns:1fr}}
 
   .card{background:linear-gradient(180deg,#fff, var(--brand-50));border:0;border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.06)}
-  .card h2{margin:0;padding:16px 18px;border-bottom:0;background:var(--brand-50);border-top-left-radius:18px;border-top-right-radius:18px;font-size:18px;color:var(--brand-dark)}
+  .card h2{margin:0;padding:16px 18px;background:var(--brand-50);border-top-left-radius:18px;border-top-right-radius:18px;font-size:18px;color:var(--brand-dark)}
   .card .body{padding:18px}
 
   label{font-weight:700;font-size:14px;display:block;margin:6px 0 4px;color:var(--brand-dark)}
@@ -98,12 +95,12 @@
 </section>
 
 <section class="main">
-  <!-- Left: Order Form (multipart/form-data, opens in new tab) -->
+  <!-- Left: Order Form -->
   <section class="card" id="order">
     <h2 id="i-form-title">下單資訊</h2>
     <div class="body grid" style="gap:16px">
 
-      <form id="orderForm" action="https://formspree.io/f/xzzjzwba" method="POST" enctype="multipart/form-data" target="_blank" class="grid" style="gap:16px">
+      <form id="orderForm" class="grid" style="gap:16px">
         <div class="grid two">
           <div><label id="i-name-label">姓名 *</label><input id="name" name="name" placeholder="王小明 / Jane Doe" required></div>
           <div><label id="i-email-label">Email *</label><input id="email" name="email" type="email" placeholder="you@example.com" required></div>
@@ -152,32 +149,28 @@
           <textarea id="note" name="note" rows="3" placeholder="例：溫暖、旅行、薄霧清晨、加入日期 2025.10.10 等"></textarea>
         </div>
 
-        <!-- 上傳參考照片（Uploadcare 小工具） -->
+        <!-- 上傳參考照片（Uploadcare） -->
         <div>
           <label>上傳參考照片（可多檔）</label>
-          <input
-            type="hidden"
-            role="uploadcare-uploader"
-            data-multiple="true"
-            data-images-only="true"
-            data-clearable="true"
-            data-tabs="file url"
-            data-system-dialog="true"
-          />
-          <!-- 把上傳後的 CDN 連結塞進這兩個 hidden，與表單一起送出 -->
+          <input type="hidden" role="uploadcare-uploader" data-multiple="true" data-images-only="true" data-clearable="true" data-tabs="file url" data-system-dialog="true"/>
           <input type="hidden" name="photo_urls" id="photo_urls">
           <input type="hidden" name="photo_count" id="photo_count">
+          <!-- 縮圖預覽 -->
+          <div id="photoPreview" class="grid two" style="gap:8px;margin-top:8px"></div>
         </div>
 
-        <!-- 傳遞計算結果與摘要（hidden） -->
+        <!-- 訂單隱藏欄位 -->
         <input type="hidden" name="totalEUR" id="hiddenTotal">
-        <input type="hidden" name="summary"   id="hiddenSummary">
+        <input type="hidden" name="summary" id="hiddenSummary">
+        <input type="hidden" name="orderNo" id="orderNo">
+        <input type="hidden" name="paymentMethod" id="paymentMethod">
 
-        <button class="btn" type="submit" id="submit">送出訂單</button>
-        <div class="muted" id="submitMsg" style="display:none">訂單已送出，請於下方選擇付款方式：</div>
+        <!-- 保留但不顯示：原 submit 鈕 -->
+        <button class="btn" type="submit" id="submit" style="display:none">送出訂單</button>
+        <div class="muted" id="submitMsg" style="display:none">訂單已送出，已開啟付款頁，請完成付款以確認。</div>
       </form>
 
-      <!-- 付款方式：常駐顯示（會依目前總額帶入金額） -->
+      <!-- 付款方式（點了才送單） -->
       <div id="paySection" class="grid" style="gap:8px">
         <button id="payPaypal">PayPal</button>
         <button id="payRevolut">Revolut</button>
@@ -220,39 +213,37 @@
 <footer id="i-footer">© 2025 捲仔 手繪明信片 ｜ Made with 💚</footer>
 
 <script>
-// ===== Helpers =====
-const $ = id => document.getElementById(id);
+const $=id=>document.getElementById(id);
 
-// ===== i18n =====
+// ===== 多語系 =====
 const I18N={
-  zh:{label:'繁中',brand:'🎨 捲仔 手繪明信片',navOrder:'下單',navWorks:'作品',
+  zh:{brand:'🎨 捲仔 手繪明信片',navOrder:'下單',navWorks:'作品',
       heroTitle:'用水彩凝結時間',heroLines:['每張手繪明信片，都是屬於你的獨一無二。','旅行回憶、生活記實、亦或是送出重要的心意，讓我為你細筆描繪。'],
       formTitle:'下單資訊',name:'姓名 *',email:'Email *',ig:'Instagram',region:'寄送地區 *',address:'寄送地址 *',style:'風格 *',qty:'數量 *',
       styleWater:'水彩 (€20)',styleLine:'純線稿 (€20)',person:'加畫人/寵物',personNote:'+ €5 / 張',bg:'背景細節',bgNote:'+ €3 / 張',
-      yes:'是',no:'否',noteLabel:'備註 / 氛圍關鍵字',submit:'送出訂單',afterSubmit:'訂單已送出，請於下方選擇付款方式：',
+      yes:'是',no:'否',noteLabel:'備註 / 氛圍關鍵字',
+      afterSubmit:'訂單已送出，已開啟付款頁，請完成付款以確認。',
       works:'作品展示',total:'總計',detailShow:'顯示明細 ▾',detailHide:'隱藏明細 ▴',sub:'小計：',add:'加購：',ship:'運費：',
       phName:'王小明 / Jane Doe',phEmail:'you@example.com',phIG:'@yourhandle',phAddr:'收件人、地址、郵遞區號、電話',phNote:'例：溫暖、旅行、薄霧清晨、加入日期 2025.10.10 等',
-      regionLU:'盧森堡 (LU)',regionEU:'歐洲 (EU)',regionTW:'台灣 (TW)',regionWORLD:'全球 (WORLD)',
-      payCard:'信用卡（自動計金額）'
-  },
-  en:{label:'EN',brand:'🎨 Ya-Sin Postcards',navOrder:'Order',navWorks:'Works',
+      regionLU:'盧森堡 (LU)',regionEU:'歐洲 (EU)',regionTW:'台灣 (TW)',regionWORLD:'全球 (WORLD)'},
+  en:{brand:'🎨 Ya-Sin Postcards',navOrder:'Order',navWorks:'Works',
       heroTitle:'Captured in watercolor',heroLines:['Each hand-painted postcard is uniquely yours.','Travel memories, everyday moments, or heartfelt messages — let me capture them in watercolor lines.'],
       formTitle:'Order details',name:'Name *',email:'Email *',ig:'Instagram',region:'Shipping region *',address:'Shipping address *',style:'Style *',qty:'Quantity *',
       styleWater:'Watercolor (€20)',styleLine:'Line art (€20)',person:'Add people/pets',personNote:'+ €5 / card',bg:'Background details',bgNote:'+ €3 / card',
-      yes:'Yes',no:'No',noteLabel:'Notes / keywords',submit:'Submit order',afterSubmit:'Order sent. Please choose a payment method below:',
+      yes:'Yes',no:'No',noteLabel:'Notes / keywords',
+      afterSubmit:'Order sent. A payment tab has opened — please complete it.',
       works:'Portfolio',total:'Total',detailShow:'Show breakdown ▾',detailHide:'Hide breakdown ▴',sub:'Subtotal: ',add:'Add-ons: ',ship:'Shipping: ',
       phName:'Your name',phEmail:'you@example.com',phIG:'@yourhandle',phAddr:'Recipient, address, postal code, phone',phNote:'e.g., warm, travel, misty morning, add date 2025-10-10',
-      regionLU:'Luxembourg (LU)',regionEU:'Europe (EU)',regionTW:'Taiwan (TW)',regionWORLD:'World (GLOBAL)'
-  },
-  fr:{label:'FR',brand:'🎨 Cartes postales chez Ya-Sin',navOrder:'Commander',navWorks:'Œuvres',
+      regionLU:'Luxembourg (LU)',regionEU:'Europe (EU)',regionTW:'Taiwan (TW)',regionWORLD:'World (GLOBAL)'},
+  fr:{brand:'🎨 Cartes postales Ya-Sin',navOrder:'Commander',navWorks:'Œuvres',
       heroTitle:'Saisir le temps en aquarelle',heroLines:["Chaque carte postale peinte à la main est unique pour vous.","Souvenirs de voyage, instants de vie ou messages précieux — je les dessine avec soin."],
       formTitle:'Détails de la commande',name:'Nom *',email:'Email *',ig:'Instagram',region:'Région d’envoi *',address:'Adresse d’envoi *',style:'Style *',qty:'Quantité *',
       styleWater:'Aquarelle (€20)',styleLine:'Dessin au trait (€20)',person:'Ajouter personnes/animaux',personNote:'+ €5 / carte',bg:'Détails de fond',bgNote:'+ €3 / carte',
-      yes:'Oui',no:'Non',noteLabel:'Remarques / mots-clés',submit:'Envoyer la commande',afterSubmit:"Commande envoyée. Choisissez ci-dessous un moyen de paiement :",
+      yes:'Oui',no:'Non',noteLabel:'Remarques / mots-clés',
+      afterSubmit:"Commande envoyée. Un onglet de paiement s’est ouvert — merci de le compléter.",
       works:'Galerie',total:'Total',detailShow:'Afficher le détail ▾',detailHide:'Masquer le détail ▴',sub:'Sous-total : ',add:'Options : ',ship:'Port : ',
       phName:'Votre nom',phEmail:'vous@example.com',phIG:'@votrecompte',phAddr:'Destinataire, adresse, code postal, téléphone',phNote:'ex. chaleureux, voyage, matin brumeux, ajouter la date 2025-10-10',
-      regionLU:'Luxembourg (LU)',regionEU:'Europe (UE)',regionTW:'Taïwan (TW)',regionWORLD:'Monde (GLOBAL)'
-  }
+      regionLU:'Luxembourg (LU)',regionEU:'Europe (UE)',regionTW:'Taïwan (TW)',regionWORLD:'Monde (GLOBAL)'}
 };
 let currentLang='zh';
 function applyLang(lang){
@@ -260,89 +251,78 @@ function applyLang(lang){
   $('i-brand').textContent=t.brand;
   $('i-nav-order').textContent=t.navOrder; $('i-nav-works').textContent=t.navWorks;
   $('i-hero-title').textContent=t.heroTitle; $('i-hero-text').innerHTML=t.heroLines.join('<br>');
-  $('i-form-title').textContent=t.formTitle; $('i-name-label').textContent=t.name; $('i-email-label').textContent=t.email; $('i-ig-label').textContent=t.ig; $('i-region-label').textContent=t.region; $('i-address-label').textContent=t.address; $('i-style-label').textContent=t.style; $('i-qty-label').textContent=t.qty;
+  $('i-form-title').textContent=t.formTitle;
+  $('i-name-label').textContent=t.name; $('i-email-label').textContent=t.email; $('i-ig-label').textContent=t.ig; $('i-region-label').textContent=t.region; $('i-address-label').textContent=t.address; $('i-style-label').textContent=t.style; $('i-qty-label').textContent=t.qty;
   $('i-style-water').textContent=t.styleWater; $('i-style-line').textContent=t.styleLine;
   $('i-person-title').textContent=t.person; $('i-person-note').textContent=t.personNote; $('i-bg-title').textContent=t.bg; $('i-bg-note').textContent=t.bgNote;
   $('i-yes').textContent=t.yes; $('i-no').textContent=t.no; $('i-yes2').textContent=t.yes; $('i-no2').textContent=t.no;
-  $('i-note-label').textContent=t.noteLabel; $('submit').textContent=t.submit; $('submitMsg').textContent=t.afterSubmit;
+  $('i-note-label').textContent=t.noteLabel; $('submitMsg').textContent=t.afterSubmit;
   $('i-works-title').textContent=t.works; $('i-total-label').textContent=t.total;
   $('toggleDetail').textContent = (document.getElementById('detailBox').style.display==='block' ? t.detailHide : t.detailShow);
-  // placeholders
   $('name').placeholder=t.phName; $('email').placeholder=t.phEmail; $('ig').placeholder=t.phIG; $('address').placeholder=t.phAddr; $('note').placeholder=t.phNote;
-  // regions
   $('i-region-lu').textContent=t.regionLU; $('i-region-eu').textContent=t.regionEU; $('i-region-tw').textContent=t.regionTW; $('i-region-world').textContent=t.regionWORLD;
 }
-
-// Language UI
-const langBar=document.getElementById('langInline');
-langBar.addEventListener('click',(e)=>{
+document.getElementById('langInline').addEventListener('click',(e)=>{
   const a=e.target.closest('.lang-link'); if(!a) return; e.preventDefault();
   document.querySelectorAll('.lang-link').forEach(el=>el.classList.toggle('active',el===a));
-  applyLang(a.dataset.lang);
-  recalc();
+  applyLang(a.dataset.lang); recalc();
 });
 
-// ===== Pricing & totals =====
+// ===== 設定 & 計價 =====
 const CONFIG={ FORMSPREE_ENDPOINT:'https://formspree.io/f/xzzjzwba', PAYPAL_LINK:'https://paypal.me/YCpostcard', REVOLUT_LINK:'https://revolut.me/yasinla9g' };
 const PRICING={watercolor:20,line:20,person:5,bg:3,ship:{LU:1.5,EU:2.0,TW:2.5,WORLD:3.0}};
 const euro=n=>`€${Number(n).toFixed(2)}`;
 
 function recalc(){
-  const qty = Math.max(1, parseInt(($('qty').value||'1'),10));
-  const style = $('style').value;
-  const base = (PRICING[style]||0)*qty;
-  const perAdd = ( ($('person').value==='1'?PRICING.person:0) + ($('bg').value==='1'?PRICING.bg:0) );
-  const add = perAdd * qty;
-  const ship = PRICING.ship[$('region').value]||0;
-  const total = base + add + ship;
-  $('t-total').textContent = euro(total);
-  $('t-sub').textContent   = (I18N[currentLang].sub  || '小計：') + euro(base);
-  $('t-add').textContent   = (I18N[currentLang].add  || '加購：') + euro(add);
-  $('t-ship').textContent  = (I18N[currentLang].ship || '運費：') + euro(ship);
-  // 更新 hidden 欄位
-  $('hiddenTotal').value = Number(total).toFixed(2);
-  $('hiddenSummary').value = buildOrder();
+  const qty=Math.max(1,parseInt(($('qty').value||'1'),10));
+  const style=$('style').value;
+  const base=(PRICING[style]||0)*qty;
+  const perAdd=(($('person').value==='1'?PRICING.person:0)+($('bg').value==='1'?PRICING.bg:0));
+  const add=perAdd*qty;
+  const ship=PRICING.ship[$('region').value]||0;
+  const total=base+add+ship;
+  $('t-total').textContent=euro(total);
+  $('t-sub').textContent=(I18N[currentLang].sub||'小計：')+euro(base);
+  $('t-add').textContent=(I18N[currentLang].add||'加購：')+euro(add);
+  $('t-ship').textContent=(I18N[currentLang].ship||'運費：')+euro(ship);
+  $('hiddenTotal').value=Number(total).toFixed(2);
+  $('hiddenSummary').value=buildOrder();
 }
-
 ['change','input'].forEach(ev=>{
   document.body.addEventListener(ev,e=>{
-    const tag=e.target.tagName; if(tag==='INPUT' || tag==='SELECT' || tag==='TEXTAREA') recalc();
+    const t=e.target.tagName;
+    if(t==='INPUT'||t==='SELECT'||t==='TEXTAREA') recalc();
   });
 });
 
 // ===== Slider =====
 (function(){
-  const slides=[...document.querySelectorAll('.slide')];
-  const dotsWrap=document.getElementById('slideDots');
-  let idx=0, timer=null;
+  const slides=[...document.querySelectorAll('.slide')], dotsWrap=document.getElementById('slideDots');
+  let idx=0,timer=null;
   function go(i){ idx=(i+slides.length)%slides.length; slides.forEach((s,j)=>s.classList.toggle('active',j===idx)); dotsWrap.querySelectorAll('button').forEach((d,j)=>d.classList.toggle('active',j===idx)); }
-  slides.forEach((_,i)=>{ const b=document.createElement('button'); if(i===0) b.classList.add('active'); dotsWrap.appendChild(b); b.addEventListener('click',()=>{ go(i); restart(); }); });
+  slides.forEach((_,i)=>{ const b=document.createElement('button'); if(i===0)b.classList.add('active'); dotsWrap.appendChild(b); b.addEventListener('click',()=>{ go(i); restart(); }); });
   document.getElementById('slidePrev').addEventListener('click',()=>{ go(idx-1); restart(); });
   document.getElementById('slideNext').addEventListener('click',()=>{ go(idx+1); restart(); });
-  function autoplay(){ timer=setInterval(()=>go(idx+1), 3500); }
+  function autoplay(){ timer=setInterval(()=>go(idx+1),3500); }
   function restart(){ clearInterval(timer); autoplay(); }
   autoplay();
 })();
 
-// ===== Uploadcare：收集檔案網址 =====
-const ucWidget = uploadcare.Widget('[role=uploadcare-uploader]');
+// ===== Uploadcare：收集檔案 & 縮圖 =====
+const ucWidget=uploadcare.Widget('[role=uploadcare-uploader]');
 ucWidget.onChange((fileOrGroup)=>{
-  if (!fileOrGroup) { $('photo_urls').value=''; $('photo_count').value='0'; return; }
-
-  const filesPromise = fileOrGroup.files
-    ? Promise.all(fileOrGroup.files().map(f=>f.promise()))
-    : fileOrGroup.promise().then(f=>[f]);
-
+  if(!fileOrGroup){ $('photo_urls').value=''; $('photo_count').value='0'; $('photoPreview').innerHTML=''; return; }
+  const filesPromise=fileOrGroup.files ? Promise.all(fileOrGroup.files().map(f=>f.promise())) : fileOrGroup.promise().then(f=>[f]);
   filesPromise.then(fileInfos=>{
-    const urls = fileInfos.filter(f => !!f.cdnUrl).map(f => f.cdnUrl);
-    $('photo_urls').value = urls.join(',');
-    $('photo_count').value = String(urls.length);
-    // 每次有更新就同步摘要
-    $('hiddenSummary').value = buildOrder();
+    const urls=fileInfos.filter(f=>!!f.cdnUrl).map(f=>f.cdnUrl);
+    $('photo_urls').value=urls.join(',');
+    $('photo_count').value=String(urls.length);
+    $('photoPreview').innerHTML=urls.map(u=>`<img src="${u}-/preview/320x320/-/quality/smart/" alt="preview" style="width:100%;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.08)">`).join('');
+    $('hiddenSummary').value=buildOrder();
   });
 });
 
-// ===== Order summary builder =====
+// ===== 訂單摘要 =====
 function buildOrder(){
   const lines=[
     '[Postcard Order]',
@@ -361,65 +341,105 @@ function buildOrder(){
   ];
   return lines.join('\n');
 }
-
 function getTotalAmount(){ const t=$('t-total').textContent||''; return (t.match(/€([0-9]+(?:\.[0-9]{1,2})?)/)||[])[1]||'0'; }
 
-// ===== Address validation =====
-function validateAddressByRegion(address, region){
+// ===== 地址基本檢查 =====
+function validateAddressByRegion(address,region){
   const a=(address||'').trim();
   if(a.length<8) return {ok:false,msg:'地址太短，請再多填一些資訊（收件人/路名/門牌/郵遞區號/電話）。'};
   if(!/\d{2,}/.test(a)) return {ok:false,msg:'請包含門牌號碼或郵遞區號。'};
-  if(region==='LU'){
-    if(!/(^|\b)(L-)?\d{4}(\b|$)/i.test(a)) return {ok:false,msg:'盧森堡地址請包含 4 位數郵遞區號（如 3271 或 L-3271）。'};
-  }else if(region==='TW'){
-    if(!/(^|\b)\d{3}(?:\d{2})?(\b|$)/.test(a)) return {ok:false,msg:'台灣地址建議包含 3 或 5 位數郵遞區號。'};
-  }
+  if(region==='LU' && !/(^|\b)(L-)?\d{4}(\b|$)/i.test(a)) return {ok:false,msg:'盧森堡地址請包含 4 位數郵遞區號（如 3271 或 L-3271）。'};
+  if(region==='TW' && !/(^|\b)\d{3}(?:\d{2})?(\b|$)/.test(a)) return {ok:false,msg:'台灣地址建議包含 3 或 5 位數郵遞區號。'};
   return {ok:true};
 }
 
-// ===== Form submit (native form, opens in new tab) =====
-const form=document.getElementById('orderForm');
-form.addEventListener('submit',(e)=>{
-  const name=$('name').value.trim(); const email=$('email').value.trim(); const address=$('address').value.trim();
-  if(!name){ alert(currentLang==='en'?'Please enter name':currentLang==='fr'?'Veuillez saisir le nom':'請輸入姓名'); e.preventDefault(); return }
-  if(!(email.includes('@')&&email.includes('.'))){ alert(currentLang==='en'?'Please enter a valid email':currentLang==='fr'?'Veuillez saisir un email valide':'請輸入有效 Email'); e.preventDefault(); return }
-  const region=$('region').value; const addrCheck=validateAddressByRegion(address, region);
-  if(!addrCheck.ok){ alert(addrCheck.msg); e.preventDefault(); return }
-  // 更新 hidden 欄位（確保最新）
-  $('hiddenTotal').value=Number(getTotalAmount()).toFixed(2);
-  $('hiddenSummary').value=buildOrder();
-  // 顯示付款提示（原頁面仍在，因為 target=_blank 會新開分頁送出）
-  $('submitMsg').style.display='block';
+// ===== 攔住原生 submit（改由付款鍵觸發） =====
+document.getElementById('orderForm').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  alert(currentLang==='en'
+    ? 'Please choose a payment method to submit the order.'
+    : currentLang==='fr'
+      ? 'Veuillez choisir un moyen de paiement pour envoyer la commande.'
+      : '請直接點選下方的付款方式以送出訂單。');
 });
 
-// ===== Payment buttons =====
-function openPay(url){
-  if(!url){ alert('Missing link'); return }
-  const amt=getTotalAmount();
-  let final=url.trim();
-  if(/paypal\.me\//i.test(final) && amt){ final = final.replace(/\/$/,'') + '/' + amt }
-  if(/revolut\.me\//i.test(final) && amt){
-    const hasQ=final.includes('?');
-    const q=(hasQ?'&':'?') + 'amount=' + encodeURIComponent(amt) + '&currency=EUR' + '&desc=' + encodeURIComponent('Postcard');
-    final = final + q;
-  }
-  window.open(final,'_blank');
+// ===== 付款流程：送單 + 開啟付款頁 =====
+function genOrderNo(){
+  const d=new Date(); const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+  const rnd=Math.random().toString(36).slice(2,6).toUpperCase();
+  return `YC${y}${m}${day}-${rnd}`;
 }
-$('payPaypal').addEventListener('click',()=>openPay(CONFIG.PAYPAL_LINK));
-$('payRevolut').addEventListener('click',()=>openPay(CONFIG.REVOLUT_LINK));
+let sending=false;
 
-// Toggle detail panel
+async function sendOrderAndGoPay(method){
+  if(sending) return;
+  // 基本驗證
+  const name=$('name').value.trim(), email=$('email').value.trim(), address=$('address').value.trim();
+  if(!name){ alert(currentLang==='en'?'Please enter name':currentLang==='fr'?'Veuillez saisir le nom':'請輸入姓名'); return; }
+  if(!(email.includes('@')&&email.includes('.'))){ alert(currentLang==='en'?'Please enter a valid email':currentLang==='fr'?'Veuillez saisir un email valide':'請輸入有效 Email'); return; }
+  const region=$('region').value; const addrCheck=validateAddressByRegion(address,region);
+  if(!addrCheck.ok){ alert(addrCheck.msg); return; }
+
+  const orderNo=genOrderNo();
+  $('orderNo').value=orderNo;
+  $('paymentMethod').value=method;
+  $('hiddenTotal').value=Number(getTotalAmount()).toFixed(2);
+  $('hiddenSummary').value=buildOrder()+`\nOrderNo: ${orderNo}\nPayment: ${method}`;
+
+  sending=true;
+  $('payPaypal').disabled=true; $('payRevolut').disabled=true;
+
+  try{
+    const res=await fetch(CONFIG.FORMSPREE_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        name,email,
+        summary:$('hiddenSummary').value,
+        totalEUR:$('hiddenTotal').value,
+        orderNo,paymentMethod:method,
+        photos:$('photo_urls').value||'',
+        region:$('region').value
+      })
+    });
+    if(!res.ok) throw new Error('submit failed');
+
+    // 開付款頁
+    openPayWithMethod(method);
+    $('submitMsg').style.display='block';
+    localStorage.setItem('lastOrderNo',orderNo);
+  }catch(e){
+    alert(currentLang==='en'?'Submit failed, please try again':'送出失敗，請稍後再試');
+    $('payPaypal').disabled=false; $('payRevolut').disabled=false;
+    sending=false;
+  }
+}
+
+function openPayWithMethod(method){
+  const amt=getTotalAmount();
+  let url='';
+  if(method==='PayPal'){
+    url=CONFIG.PAYPAL_LINK.replace(/\/$/,'')+'/'+amt;
+  }else if(method==='Revolut'){
+    url=CONFIG.REVOLUT_LINK+(CONFIG.REVOLUT_LINK.includes('?')?'&':'?')+'amount='+encodeURIComponent(amt)+'&currency=EUR&desc='+encodeURIComponent('Postcard');
+  }
+  if(url) window.open(url,'_blank');
+  $('submitMsg').textContent = I18N[currentLang].afterSubmit;
+}
+
+$('payPaypal').addEventListener('click',()=>sendOrderAndGoPay('PayPal'));
+$('payRevolut').addEventListener('click',()=>sendOrderAndGoPay('Revolut'));
+
+// 明細開合
 const toggle=$('toggleDetail');
 toggle.addEventListener('click',()=>{
   const box=$('detailBox'); const open=box.style.display==='block';
   box.style.display=open?'none':'block';
-  const t=I18N[currentLang];
-  toggle.textContent=open?t.detailShow:t.detailHide;
+  toggle.textContent=open?I18N[currentLang].detailShow:I18N[currentLang].detailHide;
 });
 
-// Initial render
-applyLang('zh');
-recalc();
+// 初始
+applyLang('zh'); recalc();
 </script>
 </body>
 </html>
